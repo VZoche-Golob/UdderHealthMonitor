@@ -21,9 +21,22 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
                                    settings = settings_SCCmonitor(),
                                    ...)  {
 
+  if (!paste("package", "magrittr", sep = ":") %in% search()) {
+
+    require(magrittr)
+
+  }
+  if (!paste("package", "svDialogs", sep = ":") %in% search()) {
+
+    require(svDialogs)
+
+  }
+
+
+
   if (is.null(PCstart)) {
 
-    PCstart <- dlgOpen(default = getwd(),
+    PCstart <- svDialogs::dlgOpen(default = getwd(),
                        title = "Select a PCstart file")$res
 
     if (length(PCstart) == 0) {
@@ -45,14 +58,14 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
 
   if (is.null(Betriebsname)) {
 
-    Betriebsname <- dlgInput(message = "Enter a farm description",
+    Betriebsname <- svDialogs::dlgInput(message = "Enter a farm description",
                              default = PCstartname)$res
 
   }
 
   if (is.null(Analyst)) {
 
-    Analyst <- dlgInput(message = "Enter your name for the report",
+    Analyst <- svDialogs::dlgInput(message = "Enter your name for the report",
                              default = "How analysed the data?")$res
 
   }

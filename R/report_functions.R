@@ -11,12 +11,16 @@
 #'
 #' @note Do not use \code{''} - Quotes in the template but \code{""} instead.
 #'
-#' @import knitr
 #' @import magrittr
-#' @import assertive
 #'
 #' @export
 generate_template <- function(template, output = "text", ...) {
+
+  if (!paste("package", "magrittr", sep = ":") %in% search()) {
+
+    require(magrittr)
+
+  }
 
   stopifnot(file.exists(template))
   stopifnot(output %in% c("text", "character"))
@@ -51,8 +55,23 @@ generate_template <- function(template, output = "text", ...) {
 #' @param useEnvir The environment in which the code chunks are to be evaluated
 #'  by \code{knit2pdf()}.
 #'
+#' @import knitr
+#' @import lattice
+#' @import magrittr
+#'
 #' @export
 cleanKnit2pdf <- function(infile, outfile, useEnvir) {
+
+  if (!paste("package", "knitr", sep = ":") %in% search()) {
+
+    require(knitr)
+
+  }
+  if (!paste("package", "lattice", sep = ":") %in% search()) {
+
+    require(lattice)
+
+  }
 
   oldWD <- getwd()
   on.exit(setwd(oldWD))
@@ -64,7 +83,7 @@ cleanKnit2pdf <- function(infile, outfile, useEnvir) {
 
   setwd(inDir)
 
-  knit2pdf(input = infile, envir = useEnvir, clean = TRUE)
+  knitr::knit2pdf(input = infile, envir = useEnvir, clean = TRUE)
 
   file.rename(file.path(inDir, paste(inBase, ".pdf", sep = "")),
               file.path(inDir, paste(outBase, ".pdf", sep = "")))
@@ -104,16 +123,30 @@ cleanKnit2pdf <- function(infile, outfile, useEnvir) {
 #' @param replace A named character vector containing the replacements for the
 #'  wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
 #'  are searched for in the wildcard names.
+#'
+#' @import assertive
+#' @import magrittr
 generate_report <- function(outfile,
                             useEnvir,
                             usertemplate = NULL,
                             replace = NULL) {
 
+  if (!paste("package", "magrittr", sep = ":") %in% search()) {
+
+    require(magrittr)
+
+  }
+  if (!paste("package", "assertive", sep = ":") %in% search()) {
+
+    require(assertive)
+
+  }
+
   if (!is.null(replace)) {
 
-    assert_is_character(replace)
-    assert_is_vector(replace)
-    assert_has_names(replace)
+    assertive::assert_is_character(replace)
+    assertive::assert_is_vector(replace)
+    assertive::assert_has_names(replace)
 
   }
 

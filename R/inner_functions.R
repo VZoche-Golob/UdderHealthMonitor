@@ -207,7 +207,18 @@ einzeltierergebnisse_speichern <- function(header_list) {
 
 prepare_PCstart <- function(file, ...) {
 
-  daten1 <- read_adis(file, kommentare = FALSE, ...)[[1]]
+  if (!paste("package", "RAdis", sep = ":") %in% search()) {
+
+    require(RAdis)
+
+  }
+  if (!paste("package", "magrittr", sep = ":") %in% search()) {
+
+    require(magrittr)
+
+  }
+
+  daten1 <- RAdis::read_adis(file, kommentare = FALSE, ...)[[1]]
 
   betriebsergebnis <- betriebsergebnis_speichern(daten1)
   tierdaten <- tierdaten_speichern(daten1)

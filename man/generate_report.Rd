@@ -17,8 +17,8 @@ See 'UdderHealthReport.Rnw' as example. If \code{NULL}, the default template fro
 'UdderHealthReport.Rnw' is used.}
 
 \item{replace}{A named character vector containing the replacements for the
-wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
-are searched for in the wildcard names.}
+ wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
+ are searched for in the wildcard names.}
 }
 \description{
 Generates the UdderHealthReport using a Sweave-template.
