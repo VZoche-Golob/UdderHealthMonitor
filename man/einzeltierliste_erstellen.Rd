@@ -2,11 +2,22 @@
 % Please edit documentation in R/inner_functions.R
 \name{einzeltierliste_erstellen}
 \alias{einzeltierliste_erstellen}
-\title{Used inside \link{monitor_SCCUdderHealth}.}
+\title{Create data frame with test day SCC values for selected cows}
 \usage{
 einzeltierliste_erstellen(mlpdaten, kuehe, monate = 3)
 }
+\arguments{
+\item{mlpdaten}{A dataframe provided as \code{$einzeltiere} by \code{\link{prepare_PCstart}}.}
+
+\item{kuehe}{A character vector of 'KuhID' which should be inluded.}
+
+\item{monate}{How many months per cow should be returned? (Returned as columns.)}
+}
+\value{
+A data frame with one row per cow, and columns for calving date, lactation
+ number, and test day SCCs.
+}
 \description{
-Used inside \link{monitor_SCCUdderHealth}.
+Used inside \code{\link{monitor_SCCUdderHealth}}.
 }
 

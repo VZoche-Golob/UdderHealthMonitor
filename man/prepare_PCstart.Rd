@@ -2,16 +2,45 @@
 % Please edit documentation in R/inner_functions.R
 \name{prepare_PCstart}
 \alias{prepare_PCstart}
-\title{Prepares the data of the 'PCstart' ADIS files from VIT for udder health monitoring.}
+\title{Prepares the data of an appropriate ADIS/ADED file for udder health monitoring}
 \usage{
 prepare_PCstart(file, ...)
 }
 \arguments{
-\item{file}{Character of length 1. Full path to the PCStart ADIS file to be read, expected in UNIX-style ('/').}
+\item{file}{Character of length 1. Full path to the ADIS file to read.}
 
-\item{...}{Further arguments passed to \link{read_adis}.}
+\item{\dots}{Further arguments passed to \code{\link[RAdis]{read_adis}}.}
+}
+\value{
+Returns a list with 3 data frames:
+\describe{
+  \item{\code{betriebsergebnis}}{the herd results}
+  \item{\code{einzeltiere}}{the individual animals dairy herd improvement test results}
+  \item{\code{tierbewegungen}}{the animal movements}
+}
 }
 \description{
-Used inside \link{monitor_SCCUdderHealth}.
+Used inside \code{\link{monitor_SCCUdderHealth}}.
+The following entities in one virtual file are needed:
+\describe{
+   \item{\code{880028}}{Items: \code{00800181, 00800004, 00800043, 00800182, 00800183,
+     00800194, 00800184, 00800185, 00800188, 00800154, 00800166}}
+   \item{\code{880005}}{Items: \code{00900080, 00900070, 00900045, 00900053, 00800111}}
+   \item{\code{880003}}{Items: \code{00900080, 00800043, 00900034, 00900038, 00800041, 00800041}}
+   \item{\code{880012}}{Items: \code{00900080, 00900028, 00800105}}
+   \item{\code{880006}}{Items: \code{00900080, 00900032, 00800044, 00800046, 00800043, 00800051,
+     00800102, 00800066, 00800709}}
+}
+The 'PCstart' and 'PCBerater' ADIS files from VIT (\url{http://www.vit.de/index.php?id=datenbereitstellung})
+ fulfill these requirements.
+}
+\note{
+Currently only the first virtual file (with the first header) is used.
+}
+\references{
+\url{http://www.vitadis.de} for an introduction in ADIS/ADED
+
+\url{http://ian.lkv-nrw.de/index.php?id=309} and
+  \url{https://webapp.lkv-nrw.de/AdedDataDictionary/} for an ADED (Agrocultural Data Exchange Dictionary)
 }
 

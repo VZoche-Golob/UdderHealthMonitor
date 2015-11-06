@@ -2,14 +2,18 @@
 % Please edit documentation in R/inner_functions.R
 \name{kalbungen_speichern}
 \alias{kalbungen_speichern}
-\title{Reads ADIS entity 880012.}
+\title{Reads ADIS entity 880012}
 \usage{
 kalbungen_speichern(header_list)
 }
 \arguments{
-\item{header_list}{A list as returned by \link{read_adis} containing the ADIS entities of one single header.}
+\item{header_list}{A list as returned by \code{\link[RAdis]{read_adis}} containing
+ the ADIS entities of a single header.}
+}
+\value{
+A data frame all calving dates.
 }
 \description{
-Used inside prepare_PCstart.
+Used inside \code{\link{prepare_PCstart}}.
 }
 

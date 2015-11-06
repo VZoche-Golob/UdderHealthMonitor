@@ -2,7 +2,7 @@
 % Please edit documentation in R/report_functions.R
 \name{generate_report}
 \alias{generate_report}
-\title{Generates the UdderHealthReport using a Sweave-template.}
+\title{Generation of a pretty UdderHealthReport}
 \usage{
 generate_report(outfile, useEnvir, usertemplate = NULL, replace = NULL)
 }
@@ -10,17 +10,18 @@ generate_report(outfile, useEnvir, usertemplate = NULL, replace = NULL)
 \item{outfile}{A string defining the output file with complete path.}
 
 \item{useEnvir}{The environment in which the code chunks are to be evaluated
-by \code{knit2pdf()}.}
+by \code{\link[knitr]{knit2pdf}}.}
 
-\item{usertemplate}{An appropriate Sweave-File containing the template for the report.
-See 'UdderHealthReport.Rnw' as example. If \code{NULL}, the default template from
-'UdderHealthReport.Rnw' is used.}
+\item{usertemplate}{An appropriate Sweave file containing the template for the report.
+See \file{extdata/MLPUdderHealthReport.Rnw} as example. If \code{NULL}, the default template created from
+\file{extdata/MLPUdderHealthReport.Rnw} is used.}
 
 \item{replace}{A named character vector containing the replacements for the
  wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
  are searched for in the wildcard names.}
 }
 \description{
-Generates the UdderHealthReport using a Sweave-template.
+Used inside \code{\link{monitor_SCCUdderHealth}}.
+Generates a pretty UdderHealthReport using a template.
 }
 

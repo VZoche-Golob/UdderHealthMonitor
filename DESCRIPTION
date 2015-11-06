@@ -1,28 +1,26 @@
 Package: UdderHealthMonitor
-Title: Provide variables to monitor the udder health of dairy cow herds using data of the Dairy Herd Improvement Tests.
+Title: Tools for monitoring the udder health of dairy cow herds using data of the Dairy Herd Improvement Tests
 Version: 0.1
 Date: 2015-10-29
 Authors@R: person("Veit", "Zoche-Golob", email = "zoche-golob@freenet.de", role = c("aut", "cre"))
-Description: This package contains functions to analyse the udder health of dairy
-    cow herds using somatic cell count data from Dairy Herd Improvement Tests. With
-    the main function \link{\code{monitor_SCCUdderHealth()}} you can import the
-    ADIS/ADED coded data from PCstart or PCBerater files
-    (http://www.vit.de/index.php?id=datenbereitstellung) and obtain the most
-    important indicators for the udder health as data frames in R - or
-    automatically generate a nice report. Further information about monitoring
-    the udder health is available from
-    http://www.milchqplus.de/kennzahlen_1.html and V. Zoche, W. Heuwieser, and
-    V. Krömker, ‘Risk-based monitoring of udder health. A review.’,
-    Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2,
-    pp. 88–94, 2011. (http://www.schattauer.de/t3page/1214.html?manuscript=16040)
+Description: A valuable package for users - particulary R-newbies - who need
+    to analyse the udder health of dairy cow herds using somatic cell count data
+    from Dairy Herd Improvement Tests. The main function 'monitor_SCCUdderHealth()'
+    reads ADIS/ADED coded data, automatically generates a pretty report with
+    the most relevant indicators for the udder health, and provides a csv-file with
+    the udder health status of all cows.
+URL: http://github.com/VZoche-Golob/UdderHealthMonitor/
 Depends: R (>= 3.2.1)
 Imports:
+    assertive,
     knitr,
     lattice,
     magrittr,
     RAdis,
-    svDialogs,
-    assertive
-License: GPL-3
+    svDialogs
+Suggests:
+    rmarkdown
+License: GPL-3 + file LICENSE
 LazyData: true
 Encoding: UTF-8
+VignetteBuilder: knitr

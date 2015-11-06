@@ -2,14 +2,18 @@
 % Please edit documentation in R/inner_functions.R
 \name{einzeltierergebnisse_speichern}
 \alias{einzeltierergebnisse_speichern}
-\title{Reads ADIS entity 880006.}
+\title{Reads ADIS entity 880006}
 \usage{
 einzeltierergebnisse_speichern(header_list)
 }
 \arguments{
-\item{header_list}{A list as returned by \link{read_adis} containing the ADIS entities of one single header.}
+\item{header_list}{A list as returned by \code{\link[RAdis]{read_adis}} containing
+ the ADIS entities of a single header.}
+}
+\value{
+A data frame containing the dairy herd improvement test result of all cows.
 }
 \description{
-Used inside prepare_PCstart.
+Used inside \code{\link{prepare_PCstart}}.
 }
 

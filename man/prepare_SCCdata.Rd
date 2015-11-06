@@ -2,17 +2,24 @@
 % Please edit documentation in R/inner_functions.R
 \name{prepare_SCCdata}
 \alias{prepare_SCCdata}
-\title{Prepares individual cows' data for SCC analysis.}
+\title{Prepares individual cows' data for SCC analysis}
 \usage{
 prepare_SCCdata(inddata, Months = c(1:12))
 }
 \arguments{
-\item{inddata}{A dataframe provided as \code{$einzeltiere} by \link{prepare_PCstart}.}
+\item{inddata}{A dataframe provided as \code{$einzeltiere} by \code{\link{prepare_PCstart}}.}
 
 \item{Months}{An integer vector giving the months for which the data should be prepared:
-1 is the most recent month, 2 the second most recent month, ... (default = 1:12).}
+ 1 is the most recent month, 2 the second most recent month, ... (default = 1:12).}
+}
+\value{
+A data frame with one row for each individual cow’s test day with its
+ SCC a this day and the two preceeding test days, and an indicator for the point
+ in lactation of the test: 'F' for the first test in a first lactation, 'T' for
+ a first test in a following lactation and 'L' for all other test days. The lactation
+ number and days in milk are also provided.
 }
 \description{
-Used inside \link{monitor_SCCUdderHealth}.
+Used inside \code{\link{monitor_SCCUdderHealth}}.
 }
 

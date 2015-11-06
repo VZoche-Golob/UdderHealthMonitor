@@ -2,23 +2,54 @@
 % Please edit documentation in R/main_functions.R
 \name{monitor_SCCUdderHealth}
 \alias{monitor_SCCUdderHealth}
-\title{The main function of UdderHealthMonitor.}
+\title{Analyse the most important SCC indicators of dairy cow herds}
 \usage{
 monitor_SCCUdderHealth(PCstart = NULL, Betriebsname = NULL,
   Analyst = NULL, return_results = FALSE,
   settings = settings_SCCmonitor(), ...)
 }
 \arguments{
-\item{PCstart}{Character of length 1. Full path to the PCStart ADIS file to be used for monitoring, expected in UNIX-style ('/').}
+\item{PCstart}{Character of length 1. Full path to the ADIS file to be used for monitoring.}
 
-\item{return_results}{If \code{TRUE} the dataframes ds_monatlich and ds_12Monate are return in a list.}
+\item{Betriebsname}{A character string, the 'name' used for the herd / farm in the report.}
 
-\item{settings}{List. See the documentation of \link{settings_SCCmonitor} for details.}
+\item{Analyst}{A character string, name that should be mentioned as the 'author' of the report.}
+
+\item{return_results}{If \code{TRUE} the dataframes \env{ds_monatlich}, \env{ds_12Monate}, and \env{ds_stw} are returned in a list.}
+
+\item{settings}{List. See the documentation of \code{\link{settings_SCCmonitor}} for details.}
 
 \item{...}{Further arguments passed to inner and report functions (e.g.
- \code{generate_report(usertemplate)}).}
+ \code{\link{generate_report}} for using a user template).}
+}
+\value{
+A report as PDF in the folder of \file{PCstart} (see also \file{doc/example-report.pdf}).
+ If \env{return_results = TRUE}, a list is returned containing the data frames
+\describe{
+  \item{\code{ds_monatlich}}{which includes the indicators for the lactation period separately for each of the last 12 months}
+  \item{\code{ds_12Monate}}{which includes the indicators for the last 12 months together}
+  \item{\code{ds_stw}}{which includes some indicators for the metabolic status of the herd separately for each of the last 12 months}
+}
 }
 \description{
-The main function of UdderHealthMonitor.
+The main function of \pkg{UdderHealthMonitor}. See also Vignette \file{UdderHealthMonitor::User Guide}
+}
+\details{
+See \code{\link{prepare_PCstart}} for the required input file.
+}
+\note{
+Currently different 'AE's are ignored and all animals of one herd are analysed together.
+
+At version 0.1 it is not checked yet, whether \pkg{UdderHealthMonitor} uses
+ \emph{exactly} the definitions of the
+ \href{http://www.milchqplus.de/dlq_richtlinie.html}{DLQ guideline 1.15},
+ because the functions of \pkg{UdderHealthMonitor} were written before the publication
+ of the guideline.
+}
+\references{
+Visit \url{http://www.milchqplus.de/kennzahlen_1.html} for further descriptions
+ of the udder health indicators.
+
+Have a look at \cite{V. Zoche, W. Heuwieser, and V. Kroemker, "Risk-based monitoring of udder health. A review."}, \href{http://www.schattauer.de/t3page/1214.html?manuscript=16040}{Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2, pp. 88–94, 2011.} for information about monitoring the udder health.
 }
 

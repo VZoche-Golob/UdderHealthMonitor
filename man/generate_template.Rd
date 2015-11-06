@@ -2,27 +2,28 @@
 % Please edit documentation in R/report_functions.R
 \name{generate_template}
 \alias{generate_template}
-\title{Generates a reporting template for \code{generate_report()} from a Sweave-file.}
+\title{Generation of a pretty UdderHealthReport template}
 \usage{
 generate_template(template, output = "text", ...)
 }
 \arguments{
-\item{template}{Sweave-file (.Rnw), the template to be used}
+\item{template}{A sweave file (.Rnw) to be used as template.}
 
-\item{output}{One of \code{c("text", "character")}}
+\item{output}{One of \code{c("text", "character")}.}
 
-\item{...}{Further arguments passed to \code{readLines()}}
+\item{\dots}{Further arguments passed to \code{\link[base]{readLines}}.}
 }
 \value{
-For \code{output = "text"} prints the template notated as string on the console.
+For \code{output = "text"} the template is printed notated as string on the console.
  Then the output can be copied and pasted into a function’s code
  (for generating the packages default).
  For \code{output = "character"}, the result of \code{readLines(template)} is returned.
 }
 \description{
-Generates a reporting template for \code{generate_report()} from a Sweave-file.
+Generates a report template for \code{\link{monitor_SCCUdderHealth}} from a Sweave-file.
+  The template is internally used by \code{\link{generate_report}}.
 }
 \note{
-Do not use \code{''} - Quotes in the template but \code{""} instead.
+Do not use \code{''} quotes in the template but \code{""} instead.
 }
 

@@ -2,13 +2,25 @@
 % Please edit documentation in R/main_functions.R
 \name{settings_SCCmonitor}
 \alias{settings_SCCmonitor}
-\title{Settings for monitor_SCCUdderHealth.}
+\title{Define settings for the monitoring of the udder health using SCC data}
 \usage{
-settings_SCCmonitor()
+settings_SCCmonitor(set = list(GW = c(100, 200, 700)))
+}
+\arguments{
+\item{set}{A list with the following elements:
+ \describe{
+   \item{\code{GW}}{An integer vector with 3 elements defining the cut-off values used to calculate the udder health indicators (See details.)}
+ }}
 }
 \description{
-\code{$GW[1]} SCC cut-off for Neuinfektionen, Heilung, Eutergesund
-\code{$GW[2]} SCC cut-off for Chronisch, (Regression -> erweiterungen)
-\code{$GW[3]} SCC cut-off for Unheilbar
+Settings for \code{\link{monitor_SCCUdderHealth}}
+}
+\details{
+\code{set$GW} are the SCC (\code{\\ 1000}) cut-offs used to calculate
+\describe{
+ \item{\code{[1]}}{Neuinfektionen, Heilung, Eutergesund}
+ \item{\code{[2]}}{Chronisch}
+ \item{\code{[3]}}{Unheilbar}
+}
 }
 

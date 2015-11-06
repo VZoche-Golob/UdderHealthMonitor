@@ -2,14 +2,18 @@
 % Please edit documentation in R/inner_functions.R
 \name{tierbewegungen_speichern}
 \alias{tierbewegungen_speichern}
-\title{Reads ADIS entity 880003.}
+\title{Reads ADIS entity 880003}
 \usage{
 tierbewegungen_speichern(header_list)
 }
 \arguments{
-\item{header_list}{A list as returned by \link{read_adis} containing the ADIS entities of one single header.}
+\item{header_list}{A list as returned by \code{\link[RAdis]{read_adis}} containing
+ the ADIS entities of a single header.}
+}
+\value{
+A data frame containing the movements of all animals in the herd.
 }
 \description{
-Used inside prepare_PCstart.
+Used inside \code{\link{prepare_PCstart}}.
 }
 

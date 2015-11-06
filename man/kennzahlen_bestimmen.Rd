@@ -2,16 +2,16 @@
 % Please edit documentation in R/inner_functions.R
 \name{kennzahlen_bestimmen}
 \alias{kennzahlen_bestimmen}
-\title{Calculates the most important SCC udder health indicators for a given dataframe.}
+\title{Calculations of the most important SCC udder health indicators}
 \usage{
 kennzahlen_bestimmen(daten, kennzahl, gw, relativ = TRUE)
 }
 \arguments{
-\item{daten}{A dataframe as returned by \link{prepare_SCCdata}.}
+\item{daten}{A dataframe as returned by \code{\link{prepare_SCCdata}}.}
 
-\item{kennzahl}{A character string, one of
+\item{kennzahl}{A character string, one of \code{
 c("ErstMLPKuh", "ErstMLPFaerse", "FaersenMast", "TSNeuinf", "TSHeilung",
-"LaktNeuinf", "LaktHeilung", "LaktChronisch", "Eutergesund", "Unheilbar")}
+"LaktNeuinf", "LaktHeilung", "LaktChronisch", "Eutergesund", "Unheilbar")}}
 
 \item{gw}{An integer between 0 and 999 as SCC cut-off value to discriminate between healthy and inflamed udders.}
 
@@ -21,6 +21,17 @@ c("ErstMLPKuh", "ErstMLPFaerse", "FaersenMast", "TSNeuinf", "TSHeilung",
 The chosen udder health indicator value as scalar.
 }
 \description{
-Used inside \link{monitor_SCCUdderHealth}.
+Used inside \code{\link{monitor_SCCUdderHealth}}.
+}
+\note{
+At version 0.1 it is not checked yet, whether \pkg{UdderHealthMonitor} uses
+ \emph{exactly} the definitions of the
+ \href{http://www.milchqplus.de/dlq_richtlinie.html}{DLQ guideline 1.15},
+ because the functions of \pkg{UdderHealthMonitor} were written before the publication
+ of the guideline.
+}
+\references{
+Visit \url{http://www.milchqplus.de/kennzahlen_1.html} for descriptions
+ of the udder health indicators.
 }
 

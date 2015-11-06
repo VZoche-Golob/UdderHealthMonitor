@@ -2,19 +2,23 @@
 % Please edit documentation in R/report_functions.R
 \name{cleanKnit2pdf}
 \alias{cleanKnit2pdf}
-\title{Converts Rnw files to PDF using \link{knitr::knit2pdf} without leaving any other files.}
+\title{Knitting really clean to pdf}
 \usage{
 cleanKnit2pdf(infile, outfile, useEnvir)
 }
 \arguments{
-\item{infile}{A string defining the output file with complete path.}
+\item{infile}{A string defining the input file with complete path.}
 
 \item{outfile}{A string defining the output file with complete path.}
 
 \item{useEnvir}{The environment in which the code chunks are to be evaluated
  by \code{knit2pdf()}.}
 }
+\value{
+Returns the \code{outfile} PDF file.
+}
 \description{
-Converts Rnw files to PDF using \link{knitr::knit2pdf} without leaving any other files.
+Used inside \code{\link{generate_report}}.
+Converts Rnw files to PDF using \code{\link[knitr]{knit2pdf}} without leaving any other files.
 }
 
