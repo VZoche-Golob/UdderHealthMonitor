@@ -47,9 +47,9 @@ At version 0.1 it is not checked yet, whether \pkg{UdderHealthMonitor} uses
  of the guideline.
 }
 \references{
-Visit \url{http://www.milchqplus.de/kennzahlen_1.html} for further descriptions
+Visit \url{http://www.milchqplus.de} for further descriptions
  of the udder health indicators.
 
-Have a look at \cite{V. Zoche, W. Heuwieser, and V. Kroemker, "Risk-based monitoring of udder health. A review."}, \href{http://www.schattauer.de/t3page/1214.html?manuscript=16040}{Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2, pp. 88–94, 2011.} for information about monitoring the udder health.
+Have a look at \cite{V. Zoche, W. Heuwieser, and V. Kroemker, "Risk-based monitoring of udder health. A review."}, \href{http://www.schattauer.de/t3page/1214.html?manuscript=16040}{Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2, pp. 88–94, 2011.} and \href{http://www.lkvsachsen.de/fileadmin/lkv/redaktion/download/unternehmen/Veredlungsland/Handout_Euterschulung.pdf}{these slides} for information about monitoring the udder health.
 }
 

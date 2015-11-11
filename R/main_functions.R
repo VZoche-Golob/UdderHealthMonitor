@@ -24,9 +24,9 @@
 #'   \item{\code{ds_stw}}{which includes some indicators for the metabolic status of the herd separately for each of the last 12 months}
 #' }
 #'
-#' @references Visit \url{http://www.milchqplus.de/kennzahlen_1.html} for further descriptions
+#' @references Visit \url{http://www.milchqplus.de} for further descriptions
 #'  of the udder health indicators.
-#' @references Have a look at \cite{V. Zoche, W. Heuwieser, and V. Kroemker, "Risk-based monitoring of udder health. A review."}, \href{http://www.schattauer.de/t3page/1214.html?manuscript=16040}{Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2, pp. 88–94, 2011.} for information about monitoring the udder health.
+#' @references Have a look at \cite{V. Zoche, W. Heuwieser, and V. Kroemker, "Risk-based monitoring of udder health. A review."}, \href{http://www.schattauer.de/t3page/1214.html?manuscript=16040}{Tierärztliche Praxis. Ausgabe G, Grosstiere/Nutztiere, vol. 39, no. 2, pp. 88–94, 2011.} and \href{http://www.lkvsachsen.de/fileadmin/lkv/redaktion/download/unternehmen/Veredlungsland/Handout_Euterschulung.pdf}{these slides} for information about monitoring the udder health.
 #'
 #' @note Currently different 'AE's are ignored and all animals of one herd are analysed together.
 #' @note At version 0.1 it is not checked yet, whether \pkg{UdderHealthMonitor} uses
