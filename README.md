@@ -13,7 +13,7 @@ After installation, only 2 (!) lines have to be typed at the R prompt:
 
 Then, dialog boxes will ask the user about all required information.  
 
-See [the user guide](vignettes/UserGuide.html) or the wiki for details.
+See [the user guide](vignettes/UserGuide.html) in the vignettes or the [wiki](https://github.com/VZoche-Golob/UdderHealthMonitor/wiki) for details.
 
 ***
 

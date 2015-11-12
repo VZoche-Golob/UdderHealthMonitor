@@ -117,7 +117,7 @@ The main function `monitor_SCCUdderHealth()` reads ADIS/ADED coded data,
 automatically generates a pretty [report](#report) with the most relevant indicators for 
 the udder health, and provides a [csv-file](#table) with the udder health status of all cows.  
   
-This user Guide mainly addresses to dairy herd consultants who are not familiar 
+This user guide mainly addresses to dairy herd consultants who are not familiar 
 with [R](https://www.r-project.org/) and just want to use the reports. But the [further 
 information](#further) provided at the end of this document may be interesting to those who 
 are already _useRs_, too.  
