@@ -13,7 +13,7 @@ After installation, only 2 (!) lines have to be typed at the R prompt:
 
 Then, dialog boxes will ask the user about all required information - and you will 
 receive the report  
-![report](vignettes/figures/example-report.svg)  
+![report](vignettes/figures/example-report.jpg)  
 
 See the user guide in the vignettes or the [wiki](https://github.com/VZoche-Golob/UdderHealthMonitor/wiki) for details.
 
