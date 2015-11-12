@@ -328,6 +328,9 @@ Entity  |  Items in entity
 Dictionaries describing the entities and items can be found at http://ian.lkv-nrw.de/index.php?id=309 
 and https://webapp.lkv-nrw.de/AdedDataDictionary/.  
 
+Obviously, [reports](#report) about up to 24 months can only be generated, if the 
+available data covers this time period.  
+
 The 'PCstart' and 'PCBerater' ADIS files from [VIT](http://www.vit.de/index.php?id=datenbereitstellung) 
 fulfill these requirements.   
 
