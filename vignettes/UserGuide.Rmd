@@ -328,6 +328,9 @@ Entity  |  Items in entity
 Dictionaries describing the entities and items can be found at http://ian.lkv-nrw.de/index.php?id=309 
 and https://webapp.lkv-nrw.de/AdedDataDictionary/.  
 
+Obviously, [reports](#report) about up to 24 months can only be generated, if the 
+available data covers this time period.  
+
 The 'PCstart' and 'PCBerater' ADIS files from [VIT](http://www.vit.de/index.php?id=datenbereitstellung) 
 fulfill these requirements.   
 
@@ -336,7 +339,7 @@ are ignored.
 
 
 
-### Definitions Of Indicators  {#definitions}
+### Definitions Of The Indicators  {#definitions}
 
 #### Indicators for the lactation period
 
@@ -377,7 +380,7 @@ Heifer mastitis rate                                           |  40%           
 
 ### User Generated Report Templates  {#usertemplates}
 
-User can create their individual template for the reports and use it in `monitor_SCCUdderHealth()`. 
+Users can create their individual template for the reports and use it in `monitor_SCCUdderHealth()`. 
 The template has to be a [Sweave](http://www.statistik.lmu.de/~leisch/Sweave/) file 
 and must not require other data than returned by the functions `prepare_PCstart()` 
 and `monitor_SCCUdderHealth()` (see their documentations ^[The documentation of R 
