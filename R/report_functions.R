@@ -112,6 +112,8 @@ cleanKnit2pdf <- function(infile, outfile, useEnvir) {
 #'  wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
 #'  are searched for in the wildcard names.
 #'
+#' @return Invisible \code{TRUE}.
+#'
 #' @import assertive
 #' @import knitr
 #' @import lattice
@@ -186,5 +188,9 @@ generate_report <- function(outfile,
   cleanKnit2pdf(file.path(outDir, "tmpreport.Rnw"), outfile, useEnvir = useEnvir)
 
   file.remove(file.path(outDir, "tmpreport.Rnw"))
+
+
+
+  return(invisible(TRUE))
 
 }

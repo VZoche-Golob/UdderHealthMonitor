@@ -20,6 +20,9 @@ See \file{extdata/MLPUdderHealthReport.Rnw} as example. If \code{NULL}, the defa
  wildcards (\code{|TMPwildcard{name}|}) in the template. The names of \code{replace}
  are searched for in the wildcard names.}
 }
+\value{
+Invisible \code{TRUE}.
+}
 \description{
 Used inside \code{\link{monitor_SCCUdderHealth}}.
 Generates a pretty UdderHealthReport using a template.

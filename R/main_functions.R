@@ -188,10 +188,21 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
   assign("ds_stw", ds_stw, envir = ev)
   assign("ls0", ls0, envir = ev)
 
-  generate_report(outfile = file.path(outdir, paste(PCstartname, "_MLPUdderHealthReport_", starttime, ".pdf", sep = "")),
+  rpt <- try(generate_report(outfile = file.path(outdir,
+                                                 paste(PCstartname,
+                                                       "_MLPUdderHealthReport_",
+                                                       starttime,
+                                                       ".pdf",
+                                                       sep = "")),
                   useEnvir = ev,
                   replace = NULL,
-                  ...)
+                  ...))
+  if ("try-error" %in% class(rpt) | !rpt) {
+
+    message("Failed to generate a report.")
+    message(rpt)
+
+  }
 
 
 

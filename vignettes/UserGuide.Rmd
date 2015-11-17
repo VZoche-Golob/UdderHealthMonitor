@@ -128,8 +128,15 @@ are already _useRs_, too.
 
 ## Installation  {#installation}
 
-Before **UdderHealthMonitor** itself can be installed, [R](https://www.r-project.org/) 
-and some packages have to be installed first.
+Before **UdderHealthMonitor** itself can be installed [LaTeX](http://www.latex-project.org/), [R](https://www.r-project.org/), and some R packages have to be installed first.
+
+
+
+#### Install LaTeX
+
+Download and install [LaTeX](http://www.latex-project.org/).
+
+Here is the installation explained in German: http://www.dante.de/tex/tl-install-windows.html
 
 
 
