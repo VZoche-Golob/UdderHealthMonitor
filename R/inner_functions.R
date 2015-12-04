@@ -262,9 +262,9 @@ prepare_PCstart <- function(file, ...) {
 
   if (any(!unique(daten2$KuhID) %in% kalbungen$KuhID)) {
 
-    warning(paste("Keinerlei Kalbedaten bei",
+    warning(paste("No calving dates found for",
                   sum(!unique(daten2$KuhID) %in% kalbungen$KuhID),
-                  "Tieren mit Einzelergebnissen (s\U00E4mtliche Eintr\U00E4ge verworfen)."))
+                  "cows with DHI test results (omitted all entries)."))
     daten2 <- subset(daten2, KuhID %in% kalbungen$KuhID)
 
   }
@@ -278,9 +278,9 @@ prepare_PCstart <- function(file, ...) {
     ik <- which(kuhkalb$Kalbedatum <= daten2$Pruefdatum[i])
     if (length(ik) == 0) {
 
-      warning(paste("Keine passende Kalbung gefunden zu MLP am ",
-                    daten2$Pruefdatum[i], " bei Kuh ", daten2$KuhID[i],
-                    ". Verwende Ersetzungen.", sep = ""))
+      warning(paste("No appropriate calving found for DHI test at ",
+                    daten2$Pruefdatum[i], " of cow ", daten2$KuhID[i],
+                    ". Using replacements.", sep = ""))
 
       kuhpdl <- daten2$Pruefdatum[daten2$KuhID == daten2$KuhID[i]] %>%
         {.[. < min(kuhkalb$Kalbedatum)]} %>%
@@ -307,40 +307,40 @@ prepare_PCstart <- function(file, ...) {
   if (nrow(daten2) != nrow(unique(daten2[, c("KuhID", "Monat")]))) {
 
     warning(paste(sum(duplicated(daten2[, c("KuhID", "Monat")])),
-                  "Mehrfacheintr\U00E4ge pro Kuh und Monat entfernt (von",
-                  nrow(daten2), "Eintr\U00E4gen)."))
-    daten2 <- daten2[which(!duplicated(daten2[, c("KuhID", "Monat")])), ]   # Provisorische Entfernung von Duplikaten pro Monat
+                  "Duplicate entries per cow and month deleted (of",
+                  nrow(daten2), "entries)."))
+    daten2 <- daten2[which(!duplicated(daten2[, c("KuhID", "Monat")])), ]   # delete duplicate entries per cow and month
 
   }
   if (any(daten2$ZZ == 0, na.rm = TRUE)) {
 
     warning(paste(sum(daten2$ZZ == 0, na.rm = TRUE),
-                  "Zellzahlwerte von 0 auf NA gesetzt (von",
-                  nrow(daten2),"Eintr\U00E4gen)."))
+                  "Somatic cell counts set from 0 to NA (at",
+                  nrow(daten2),"entries)."))
     daten2$ZZ[daten2$ZZ == 0] <- NA
 
   }
   if (any(daten2$Fp == 0, na.rm = TRUE)) {
 
     warning(paste(sum(daten2$Fp == 0, na.rm = TRUE),
-                  "Fettprozente von 0 auf NA gesetzt (von",
-                  nrow(daten2), "Eintr\U00E4gen)."))
+                  "Fat percentage set from 0 to NA (at",
+                  nrow(daten2), "entries)."))
     daten2$Fp[daten2$Fp == 0] <- NA
 
   }
   if (any(daten2$Ep == 0, na.rm = TRUE)) {
 
     warning(paste(sum(daten2$Ep == 0, na.rm = TRUE),
-                  "Eiweissprozente von 0 auf NA gesetzt (von",
-                  nrow(daten2), "Eintr\U00E4gen)."))
+                  "Protein percentage set from 0 to NA (at",
+                  nrow(daten2), "entries)."))
     daten2$Ep[daten2$Ep == 0] <- NA
 
   }
   if (any(daten2$Urea == 0, na.rm = TRUE)) {
 
     warning(paste(sum(daten2$Urea == 0, na.rm = TRUE),
-                  "Harnstoffwerte von 0 auf NA gesetzt (von",
-                  nrow(daten2), "Eintr\U00E4gen)."))
+                  "Urea set from 0 to NA (at",
+                  nrow(daten2), "entries)."))
     daten2$Urea[daten2$Urea == 0] <- NA
 
   }
