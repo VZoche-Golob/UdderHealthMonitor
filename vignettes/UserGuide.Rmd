@@ -348,7 +348,7 @@ are ignored.
 
 ### Definitions Of The Indicators  {#definitions}
 
-#### Indicators for the lactation period
+#### Indicators for the lactation period (calculated on a monthly basis)
 
 Name                                                            |  Definition  
 --------------------------------------------------------------- | -----------  
@@ -360,7 +360,7 @@ Percentage of cows with low chances of cure [[@dlq2014]](#lit)  |  Percentage of
 
 
 
-#### Indicators for the dry period
+#### Indicators for the dry period (calculated using twelve months)
 
 Name                                              |  Definition  
 ------------------------------------------------- | -----------  

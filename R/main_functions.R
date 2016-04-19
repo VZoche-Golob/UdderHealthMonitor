@@ -41,8 +41,9 @@
 #' @export
 
 monitor_SCCUdderHealth <- function(PCstart = NULL,
-                                   Betriebsname = NULL,
-                                   Analyst = NULL,
+                                   Farm = "EnterFarmName",
+                                   Analyst = "EnterYourName",
+                                   Period = c(from = NULL, to = NULL),
                                    return_results = FALSE,
                                    settings = settings_SCCmonitor(),
                                    ...)  {
@@ -50,7 +51,7 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
   if (is.null(PCstart)) {
 
     PCstart <- dlgOpen(default = getwd(),
-                       title = "Select a PCstart file")$res
+                       title = "Select a data file")$res
 
     if (length(PCstart) == 0) {
 
@@ -61,6 +62,8 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
     }
 
   }
+  assertive::assert_is_of_length(PCstart, 1)
+  assertive::assert_all_are_readable_files(PCstart)
 
   outdir <- dirname(PCstart)
 
@@ -69,12 +72,25 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
 
   starttime <- format(Sys.time(), "%Y-%m-%d_%H-%M")
 
+
+
+  assertive::assert_is_of_length(Farm, 1)
+  assertive::assert_is_character(Farm)
+
+  assertive::assert_is_of_length(Analyst, 1)
+  assertive::assert_is_character(Analyst)
+
+
+
+
   if (is.null(Betriebsname)) {
 
     Betriebsname <- dlgInput(message = "Enter a farm description",
                              default = PCstartname)$res
 
   }
+  assertive::assert_is_of_length(Betriebsname, 1)
+  assertive::assert_is_character(Betriebsname)
 
   if (is.null(Analyst)) {
 
@@ -86,6 +102,16 @@ monitor_SCCUdderHealth <- function(PCstart = NULL,
 
 
   ls0 <- prepare_PCstart(PCstart)
+
+
+
+  if (all(is.null(Period))) {
+
+  }
+
+
+
+
   ds0 <- ls0$einzeltiere
   ds1 <- prepare_SCCdata(ds0, Months = c(1:12))
 
