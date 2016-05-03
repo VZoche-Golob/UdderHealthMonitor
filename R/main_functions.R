@@ -35,8 +35,8 @@
 #'  because the functions of \pkg{UdderHealthMonitor} were written before the publication
 #'  of the guideline.
 #'
-#' @importFrom magrittr '%>%'
 #' @import svDialogs
+#' @importFrom magrittr '%>%'
 #'
 #' @export
 

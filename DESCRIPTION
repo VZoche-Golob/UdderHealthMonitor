@@ -1,16 +1,18 @@
 Package: UdderHealthMonitor
-Title: Tools for monitoring the udder health of dairy cow herds using data of the Dairy Herd Improvement Tests
+Title: Tools for monitoring the udder health of dairy cow herds using data of
+    the Dairy Herd Improvement Tests
 Version: 0.1.1
 Date: 2015-10-29
 Authors@R: person("Veit", "Zoche-Golob", email = "zoche-golob@freenet.de", role = c("aut", "cre"))
-Description: A valuable package for users - particulary R-newbies - who need
-    to analyse the udder health of dairy cow herds using somatic cell count data
-    from Dairy Herd Improvement Tests. The main function 'monitor_SCCUdderHealth()'
-    reads ADIS/ADED coded data, automatically generates a pretty report with
-    the most relevant indicators for the udder health, and provides a csv-file with
-    the udder health status of all cows.
+Description: A valuable package for users - particulary R-newbies - who need to
+    analyse the udder health of dairy cow herds using somatic cell count data from
+    Dairy Herd Improvement Tests. The main function 'monitor_SCCUdderHealth()' reads
+    ADIS/ADED coded data, automatically generates a pretty report with the most
+    relevant indicators for the udder health, and provides a csv-file with the udder
+    health status of all cows.
 URL: http://github.com/VZoche-Golob/UdderHealthMonitor/
-Depends: R (>= 3.2.1),
+Depends:
+    R (>= 3.2.1),
     svDialogs
 Imports:
     assertive,
@@ -24,3 +26,4 @@ License: GPL-3 + file LICENSE
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

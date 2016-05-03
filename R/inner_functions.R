@@ -365,17 +365,17 @@ prepare_PCstart <- function(file, ...) {
 
 #' Calculations of dairy herd health indicators from Dairy Herd Improvement Test data
 #'
-#' Used inside \code{\link{monitor_SCCUdderHealth}}.
+#' Used inside \code{\link{IndicatorSheet}}.
 #'
-#' @param data A dataframe as \code{$einzeltiere} returned by \code{\link{prepare_PCstart}}.
 #' @param indicator A character string, one of \code{
 #'  c("LowSCC", "LactNI", "LactCure", "Chronic", "NoCure", "DryNI", "DryCure", "HeiferMast",
 #'  "LowFPR", "HiFPRtotal", "HiFPR100", "Urea")}
+#' @param data A dataframe as \code{$einzeltiere} returned by \code{\link{prepare_PCstart}}.
 #' @param testmonths The months for which the indicator should be calculated as vector
 #'  of class '\code{Date}. If \code{NA}, the recent date of \code{data} is used.
 #'
-#' @return A matrix with \code{ncol = length(testmonths)} and three rows: \code{a},
-#'  the numerator, \code{b}, the denominator, and \code{c}, the percentage of
+#' @return A matrix with \code{ncol = length(testmonths)} and three rows:
+#' \code{a}, the numerator, \code{b}, the denominator, and \code{c}, the percentage of
 #'  the \code{indicator}, for all indicators except \code{Urea}. For
 #'  \code{indicator = Urea}, the matrix has only two rows: \code{mean}, the mean,
 #'  and \code{sd}, the standard deviation of the milk urea content.
@@ -384,7 +384,7 @@ prepare_PCstart <- function(file, ...) {
 #'  of the udder health indicators.
 #'
 #' @importFrom magrittr '%>%'
-calculate_indicator <- function(data, indicator, testmonths = NA) {
+calculate_indicator <- function(indicator, data, testmonths = NA) {
 
   yearmonth <- function(dateObject) {
 
@@ -394,7 +394,8 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
 
       x - as.integer(substr(as.character(x), 9, 10)) + 1
 
-    })
+    }) %>%
+      as.Date(., origin = Sys.Date() - as.integer(Sys.Date()))
 
   }
 
@@ -510,22 +511,23 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
                              stop("Most probably insufficient data to calculate DryNI.")
                            }
 
-                           calvings <- unique(df[df$LaktNr > 1 & yearAgo,
+                           calvings <- unique(df[df$LaktNr > 1 &
+                                                   df$Kalbedatum > yearAgo,
                                                  c("KuhID", "LaktNr", "Kalbedatum")]) %>%
                                                  {.[do.call(order, list(., decreasing = TRUE)), ]} %>%
                                                  {.[!duplicated(.$KuhID), ]}
 
                            ZZpost <- sapply(seq_along(calvings[, 1]),
-                                            function(x, cv = calvings, df = df) {
+                                            function(x, cv = calvings, ds = df) {
 
                                               id <- cv$KuhID[x]
                                               lact <- cv$LaktNr[x]
                                               cvdat <- cv$Kalbedatum[x]
 
-                                              pre <- subset(df, KuhID == id &
-                                                              LaktNr == lact - 1 &
-                                                              !is.na(ZZ)) %>%
-                                                              {subset(., ZZ > 0 & ZZ <= 100)}
+                                              pre <- subset(ds, KuhID == id &
+                                                              LaktNr == (lact - 1) &
+                                                              !is.na(ZZ))
+                                              pre <- subset(pre, ZZ > 0 & ZZ <= 100)
                                               if (nrow(pre) == 0) {
 
                                                 return(NA)
@@ -534,18 +536,21 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
 
                                                 pre <- pre[which.max(pre$Pruefdatum), ]
 
-                                                if (!assertive::is_in_range(cvdat - pre$Pruefdatum,
-                                                                       0,
-                                                                       182 + 30)) {
+                                                if (
+                                                  !assertive::is_in_range(
+                                                    as.integer(cvdat - pre$Pruefdatum),
+                                                    0,
+                                                    182 + 30)
+                                                  ) {
 
                                                   return(NA)
 
                                                 } else {
 
-                                                  post <- subset(df, KuhID == id &
+                                                  post <- subset(ds, KuhID == id &
                                                                    LaktNr == lact &
-                                                                   !is.na(ZZ)) %>%
-                                                                   {subset(., ZZ > 0)}
+                                                                   !is.na(ZZ))
+                                                  post <- subset(post, ZZ > 0)
 
                                                   if (nrow(post) == 0) {
 
@@ -586,16 +591,16 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
                                 {.[!duplicated(.$KuhID), ]}
 
                            ZZpost <- sapply(seq_along(calvings[, 1]),
-                                            function(x, cv = calvings, df = df) {
+                                            function(x, cv = calvings, ds = df) {
 
                                               id <- cv$KuhID[x]
                                               lact <- cv$LaktNr[x]
                                               cvdat <- cv$Kalbedatum[x]
 
-                                              pre <- subset(df, KuhID == id &
-                                                              LaktNr == lact - 1 &
-                                                              !is.na(ZZ)) %>%
-                                                              {subset(., ZZ > 100)}
+                                              pre <- subset(ds, KuhID == id &
+                                                              LaktNr == (lact - 1) &
+                                                              !is.na(ZZ))
+                                              pre <- subset(pre, ZZ > 100)
                                               if (nrow(pre) == 0) {
 
                                                 return(NA)
@@ -604,18 +609,22 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
 
                                                 pre <- pre[which.max(pre$Pruefdatum), ]
 
-                                                if (!assertive::is_in_range(cvdat - pre$Pruefdatum,
-                                                                            0,
-                                                                            182 + 30)) {
+                                                if (
+                                                  !assertive::is_in_range(
+                                                    as.integer(cvdat - pre$Pruefdatum),
+                                                    0,
+                                                    182 + 30
+                                                  )
+                                                ) {
 
                                                   return(NA)
 
                                                 } else {
 
-                                                  post <- subset(df, KuhID == id &
+                                                  post <- subset(ds, KuhID == id &
                                                                    LaktNr == lact &
-                                                                   !is.na(ZZ)) %>%
-                                                                   {subset(., ZZ > 0)}
+                                                                   !is.na(ZZ))
+                                                  post <- subset(post, ZZ > 0)
 
                                                   if (nrow(post) == 0) {
 
@@ -655,9 +664,9 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
                                                  "KuhID"])
 
                            ZZfirst <- sapply(heifers,
-                                             function(x, df = df) {
+                                             function(x, ds = df) {
 
-                                               post <- subset(df, KuhID == x &
+                                               post <- subset(ds, KuhID == x &
                                                                 LaktNr == 1 &
                                                                 !is.na(ZZ)) %>%
                                                                 {subset(., ZZ > 0)}
@@ -732,7 +741,7 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
 
 
 
-  if (is.na(testmonths)) {
+  if (is.na(testmonths[1])) {
 
     usemonths <- yearmonth(max(data$Pruefdatum, na.rm = TRUE))
 
@@ -743,14 +752,14 @@ calculate_indicator <- function(data, indicator, testmonths = NA) {
     outside <- sapply(
       usemonths,
       function(x, bounds = yearmonth(range(data$Pruefdatum, na.rm = TRUE))) {
-        c(x, assertive::is_in_range(x, bounds[1], bounds[2]))
+        x >= bounds[1] & x <= bounds[2]
       }
     )
-    if (any(outside[2, ] != TRUE)) {
+    if (any(outside != TRUE)) {
       warning(
         paste(
-          paste0(outside[1, which(outside[2, ] != TRUE)], collapse = ", "),
-          "are not in the available interval [",
+          paste0(testmonths[which(outside != TRUE)], collapse = ", "),
+          " are not in the available interval [",
           paste0(yearmonth(range(data$Pruefdatum, na.rm = TRUE)), collapse = ", "),
           "].",
           sep = ""
