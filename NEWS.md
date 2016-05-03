@@ -2,7 +2,12 @@
 
 
 
-#### Version 0.1.1 (under development)
+#### Version 0.1.1 (development version)
+
+
+##### Improvements
+* `IndicatorSheet` : produces a simple graphical report of the most important SCC indicators 
+according to the DLQ **without** requiring LaTeX.
 
 
 ##### Fixes
