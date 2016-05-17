@@ -2,7 +2,7 @@
 
 
 
-#### Version 0.1.1 (development version)
+#### Version 0.1.1
 
 
 ##### Improvements
@@ -16,4 +16,5 @@ according to the DLQ **without** requiring LaTeX.
 
 ##### Minor Changes
 * `prepare_PCstart` : Translated warnings to English
+
 
