@@ -11,28 +11,47 @@ IndicatorSheet(PCstart = NULL, Farm = "SomeDairyHerd", out_dir = NULL,
 \item{PCstart}{Character of length 1. Full path to the ADIS file to be used for monitoring.}
 
 \item{Farm}{A character string, the 'name' used for the herd / farm in the report.}
+
+\item{out_dir}{Optional character of length 1. Full path to the directory where the report
+file should be produced. If not specified the directory of \code{PCstart} is used.}
+
+\item{out_window}{Logical of length 1. Should the report be shown in the standard plot display?
+(Default is \code{FALSE})}
+
+\item{return_results}{Logical of length 1. Should the data shown in the report be returned
+as a data.frame? (Default is \code{FALSE}).}
 }
 \value{
-_results Logical of length 1. Should the data shown in the report be returned
- as a data.frame? (Default is \code{FALSE}).
-
 A grafical report in pdf-format is always produced in the \code{out_dir}
- directory. If \code{return_results} is \code{TRUE}, the data is also returned
- as data.frame. \code{NULL} invisible otherwise.
+ directory. If \env{return_results = TRUE}, the calculated values of the indicators
+ are also returned as a data.frame with one row per month and the columns:
+ \describe{
+	 \item{\code{Month}}{Test month}
+  \item{\code{LowSCC}}{Percentage of cows without mastitis}
+  \item{\code{LactNI}}{Lactational new infection rate}
+  \item{\code{LactCure}}{Lactational cure rate}
+  \item{\code{Chronic}}{Percentage of cows with chronic mastitis}
+  \item{\code{NoCure}}{Percentage of cows with low chances of cure}
+  \item{\code{DryNI}}{Dry period new infection rate}
+  \item{\code{DryCure}}{Dry period cure rate}
+  \item{\code{HeiferMast}}{Heifer mastitis rate}
+ }
+ \code{NULL} invisible otherwise.
 }
 \description{
 This function calculates the most important udder health indicators that are
 based on the monthly dairy herd improvement test somatic cell counts (SCC)
 according to the DLQ and \url{http://www.milchqplus.de} and produces a concise
-graphical report on a single page in pdf-format.
+graphical report on a single page in pdf-format.  
+The indicators are calculated for the 13 recent months for which data is provided.
 }
 \details{
-See \code{\link{prepare_PCstart}} for the required input file.
+See \code{\link{prepare_PCstart}} for the required input file. The 
+  definitions of the indicators are given in the package vignette
+  \file{UdderHealthMonitor::User Guide}.
 }
 \note{
 Currently different 'AE's are ignored and all animals of one herd are analysed together.
-
-This function does not require LaTeX.
 }
 \references{
 Visit \url{http://www.milchqplus.de} for further descriptions

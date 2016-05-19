@@ -23,6 +23,7 @@
 #'  directory. If \env{return_results = TRUE}, the calculated values of the indicators
 #'  are also returned as a data.frame with one row per month and the columns:
 #'  \describe{
+#' 	 \item{\code{Month}}{Test month}
 #'   \item{\code{LowSCC}}{Percentage of cows without mastitis}
 #'   \item{\code{LactNI}}{Lactational new infection rate}
 #'   \item{\code{LactCure}}{Lactational cure rate}
@@ -124,12 +125,14 @@ IndicatorSheet <- function(
     }
 
     for (i in inds) {
+		
+		indicatorI <- calculate_indicator(i, data = CowData, testmonths = dataMonths)
 
       indicators <- rbind(
         indicators,
         data.frame(
-          Month = dataMonths,
-          value = calculate_indicator(i, data = CowData, testmonths = dataMonths)[3, ],
+          Month = indicatorI$Month,
+          value = indicatorI$c,
           indicator = i,
           period = p,
           stringsAsFactors = FALSE
@@ -229,7 +232,7 @@ IndicatorSheet <- function(
     ) %>%
       as.data.frame
     out <- cbind(
-      Month = substr(as.character(indicators$Month[1:13]), 1, 7),
+      Month = indicators$Month[1:13],
       out
     )
     out$Month <- as.character(out$Month)
