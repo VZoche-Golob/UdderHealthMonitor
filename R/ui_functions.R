@@ -46,202 +46,209 @@
 #' @export
 
 IndicatorSheet <- function(
-  PCstart = NULL,
-  Farm = "SomeDairyHerd",
-  out_dir = NULL,
-  out_window = FALSE,
-  return_results = FALSE
+		PCstart = NULL,
+		Farm = "SomeDairyHerd",
+		out_dir = NULL,
+		out_window = FALSE,
+		return_results = FALSE
 ) {
-
-  # test the parameters
-
-  if (is.null(PCstart)) {
-
-    PCstart <- try(file.choose())
-
-    if ("try-error" %in% class(PCstart)) {
-
-      cat("\nNo PCstart file selected.\n")
-
-      return(invisible(NULL))
-
-    }
-
-  }
-  assertive::assert_is_of_length(PCstart, 1)
-
-
-  if (is.null(out_dir)) {
-
-    out_dir <- dirname(PCstart)
-
-  }
-  assertive::assert_is_of_length(out_dir, 1)
-  assertive::assert_all_are_dirs(out_dir)
-
-
-  assertive::assert_is_of_length(out_window, 1)
-  assertive::assert_is_logical(out_window)
-
-
-  assertive::assert_is_of_length(Farm, 1)
-  assertive::assert_is_character(Farm)
-
-
-  assertive::assert_is_of_length(return_results, 1)
-  assertive::assert_is_logical(return_results)
-
-
-
-
-  # import data
-
-  CowData <- prepare_PCstart(PCstart)$einzeltiere
-
-
-
-
-  # Calculate indicators per month for the 13 recent months with available data
-
-  dataMonths <- seq(max(CowData$Pruefdatum), by = "-1 month", length.out = 13)
-
-  indicators <- data.frame(
-    Month = numeric(0),
-    value = numeric(0),
-    indicator = character(0),
-    period = character(0),
-    stringsAsFactors = FALSE
-  )
-  for (p in c("Lactation", "Dry Period")) {
-
-    if (p == "Lactation") {
-
-      inds <- c("LowSCC", "LactNI", "LactCure", "Chronic", "NoCure")
-
-    } else {
-
-      inds <- c("DryNI", "DryCure", "HeiferMast")
-
-    }
-
-    for (i in inds) {
+	
+	# test the parameters
+	
+	if (is.null(PCstart)) {
 		
-		indicatorI <- calculate_indicator(i, data = CowData, testmonths = dataMonths)
-
-      indicators <- rbind(
-        indicators,
-        data.frame(
-          Month = indicatorI$Month,
-          value = indicatorI$c,
-          indicator = i,
-          period = p,
-          stringsAsFactors = FALSE
-        )
-      )
-
-    }
-
-  }
-
-
-
-
-  # plot indicators
-
-  i2 <- indicators
-  i2$in2 <- factor(i2$indicator, levels = unique(i2$indicator), labels = "i")
-  i2$idx <- rep(13:1, 8)
-
-  indPlot <- lattice::xyplot(
-    value ~ idx | period,
-    groups = in2,
-    data = i2,
-    main = "UdderHealthMonitor-IndicatorSheet",
-    sub = paste(Farm, Sys.Date(), sep = "; created: "),
-    xlab = "Month",
-    scales = list(
-      x = list(
-        cex = 1,
-        at = seq(1, 13, 2),
-        labels = substr(as.character(i2$Month[seq(13, 1, -2)]), 1, 7),
-        rot = 45
-      )
-    ),
-    ylab = "%",
-    strip = FALSE,
-    strip.left = TRUE,
-    type = c("g", "b"),
-    layout = c(1, 2),
-    between = list(
-      x = 0,
-      y = 0.2
-    ),
-    par.settings = simpleTheme(
-      lwd = 1.5,
-      lty = c(1, 2, 3, 4, 6, 2, 3, 5),
-      pch = c(13, 1, 0, 5, 6, 16, 15, 17)
-    ),
-    auto.key = list(
-      text = c(
-        "Percentage of cows without mastitis",
-        "Lactational new infection rate",
-        "Lactational cure rate",
-        "Percentage of cows with chronic mastitis",
-        "Percentage of cows with low chances of cure",
-        "Dry period new infection rate",
-        "Dry period cure rate",
-        "Heifer mastitis rate"
-      ),
-      points = FALSE,
-      lines = TRUE,
-      cex = 0.6,
-      type = "b",
-      divide = 1,
-      columns = 4)
-  )
-
-  if (out_window == TRUE) print(indPlot)
-
-  lattice::trellis.device(
-    device = "pdf",
-    title = "UdderHealthMonitor-IndicatorSheet",
-    width = 11,
-    height = 7.5,
-    paper = "a4r",
-    color = FALSE,
-    file = paste(out_dir, "/IndicatorSheet_", Farm, "_", Sys.Date(), ".pdf", sep = "")
-  )
-  on.exit(dev.off())
-  print(indPlot)
-
-
-
-
-  # return results
-
-  if (return_results == TRUE) {
-
-    out <- matrix(
-      indicators$value,
-      nrow = 13,
-      ncol = 8,
-      dimnames = list(
-        NULL,
-        unique(indicators$indicator)
-      )
-    ) %>%
-      as.data.frame
-    out <- cbind(
-      Month = indicators$Month[1:13],
-      out
-    )
-    out$Month <- as.character(out$Month)
-    return(out)
-
-  } else {
-
-    invisible(NULL)
-
-  }
-
+		PCstart <- try(file.choose())
+		
+		if ("try-error" %in% class(PCstart)) {
+			
+			cat("\nNo PCstart file selected.\n")
+			
+			return(invisible(NULL))
+			
+		}
+		
+	}
+	assertive::assert_is_of_length(PCstart, 1)
+	
+	
+	if (is.null(out_dir)) {
+		
+		out_dir <- dirname(PCstart)
+		
+	}
+	assertive::assert_is_of_length(out_dir, 1)
+	assertive::assert_all_are_dirs(out_dir)
+	
+	
+	assertive::assert_is_of_length(out_window, 1)
+	assertive::assert_is_logical(out_window)
+	
+	
+	assertive::assert_is_of_length(Farm, 1)
+	assertive::assert_is_character(Farm)
+	
+	
+	assertive::assert_is_of_length(return_results, 1)
+	assertive::assert_is_logical(return_results)
+	
+	
+	
+	
+	# import data
+	
+	CowData <- prepare_PCstart(PCstart)$einzeltiere
+	
+	
+	
+	
+	# Calculate indicators per month for the 13 recent months with available data
+	
+	monthsToShow <- 13
+	dataMonths <- seq(max(CowData$Pruefdatum), by = "-1 month", length.out = monthsToShow)
+	
+	indicators <- data.frame(
+			Month = numeric(0),
+			value = numeric(0),
+			indicator = character(0),
+			period = character(0),
+			stringsAsFactors = FALSE
+	)
+	for (p in c("Lactation", "Dry Period")) {
+		
+		if (p == "Lactation") {
+			
+			inds <- c("LowSCC", "LactNI", "LactCure", "Chronic", "NoCure")
+			
+		} else {
+			
+			inds <- c("DryNI", "DryCure", "HeiferMast")
+			
+		}
+		
+		for (i in inds) {
+			
+			indicatorI <- calculate_indicator(i, data = CowData, testmonths = dataMonths)
+			
+			indicators <- rbind(
+					indicators,
+					data.frame(
+							Month = indicatorI$Month,
+							value = indicatorI$c,
+							indicator = rep(i, monthsToShow),
+							period = rep(p, monthsToShow),
+							stringsAsFactors = FALSE
+					)
+			)
+			
+		}
+		
+	}
+	
+	
+	
+	
+	# plot indicators
+	
+	i2 <- indicators
+	i2$in2 <- factor(i2$indicator, levels = unique(i2$indicator), labels = "i")
+	i2$idx <- rep(monthsToShow:1, 8)
+	
+	indPlot <- lattice::xyplot(
+			value ~ idx | period,
+			groups = in2,
+			data = i2,
+			main = "UdderHealthMonitor-IndicatorSheet",
+			sub = paste(Farm, Sys.Date(), sep = "; created: "),
+			xlab = "Month",
+			scales = list(
+					x = list(
+							cex = 1,
+							at = seq(1, monthsToShow, 2),
+							labels = substr(as.character(i2$Month[seq(monthsToShow, 1, -2)]), 1, 7),
+							rot = 45
+					)
+			),
+			ylab = "%",
+			strip = FALSE,
+			strip.left = TRUE,
+			type = c("g", "b"),
+			layout = c(1, 2),
+			between = list(
+					x = 0,
+					y = 0.2
+			),
+			par.settings = simpleTheme(
+					lwd = 1.5,
+					lty = c(1, 2, 3, 4, 6, 2, 3, 5),
+					pch = c(13, 1, 0, 5, 6, 16, 15, 17)
+			),
+			auto.key = list(
+					text = c(
+							"Percentage of cows without mastitis",
+							"Lactational new infection rate",
+							"Lactational cure rate",
+							"Percentage of cows with chronic mastitis",
+							"Percentage of cows with low chances of cure",
+							"Dry period new infection rate",
+							"Dry period cure rate",
+							"Heifer mastitis rate"
+					),
+					points = FALSE,
+					lines = TRUE,
+					cex = 0.6,
+					type = "b",
+					divide = 1,
+					columns = 4)
+	)
+	
+	if (out_window == TRUE) print(indPlot)
+	
+	lattice::trellis.device(
+			device = "pdf",
+			title = "UdderHealthMonitor-IndicatorSheet",
+			width = 11,
+			height = 7.5,
+			paper = "a4r",
+			color = FALSE,
+			file = paste(out_dir, "/IndicatorSheet_", Farm, "_", Sys.Date(), ".pdf", sep = "")
+	)
+	on.exit(dev.off())
+	print(indPlot)
+	message(paste(
+					"The report was produced as '",
+					"IndicatorSheet_", Farm, "_", Sys.Date(), ".pdf'",
+					" in '", out_dir, "'.",
+					sep = ""
+			))
+	
+	
+	
+	
+	# return results
+	
+	if (return_results == TRUE) {
+		
+		out <- matrix(
+						indicators$value,
+						nrow = monthsToShow,
+						ncol = 8,
+						dimnames = list(
+								NULL,
+								unique(indicators$indicator)
+						)
+				) %>%
+				as.data.frame
+		out <- cbind(
+				Month = indicators$Month[1:monthsToShow],
+				out
+		)
+		out$Month <- as.character(out$Month)
+		return(out)
+		
+	} else {
+		
+		invisible(NULL)
+		
+	}
+	
 }

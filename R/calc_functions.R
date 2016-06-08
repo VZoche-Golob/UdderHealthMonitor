@@ -20,7 +20,7 @@
 #'  has only three columns: 
 #'  \describe{
 #'   \item{\code{Month}}{the test month}
-#'   \item{\code{mean}}{the mean}\describe{
+#'   \item{\code{mean}}{the mean}
 #'   \item{\code{sd}}{the standard deviation of the milk urea content}
 #'  }
 #'
@@ -45,6 +45,34 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 		
 	}
 	
+	
+	validateValue <- function(x) {
+		
+		stopifnot(length(x) <= 1)		
+		if (is.null(x)) return(NA)
+		if (is.finite(x)) {
+			return(x)
+		} else {
+			return(NA)
+		}
+		
+	}
+	
+	
+	retFun <- function(A, B) {
+		
+		ret <- c(
+				validateValue(A), 
+				validateValue(B), 
+				validateValue(A * 100 / B)
+		)
+		stopifnot(length(ret) == 3)
+		names(ret) <- c("a", "b", "c")
+		return(ret)
+		
+	}
+	
+	
 	do_determine <- switch(indicator,
 			LowSCC = function(tm, df) {
 				
@@ -54,7 +82,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$ZZ > 0 & df$ZZ <= 100)
 				b <- sum(df$ZZ > 0)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			LactNI = function(tm, df) {
@@ -76,7 +104,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$ZZ1 > 100)
 				b <- nrow(df)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			LactCure = function(tm, df) {
@@ -98,7 +126,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$ZZ1 <= 100)
 				b <- nrow(df)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			Chronic = function(tm, df) {
@@ -119,7 +147,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- nrow(df)
 				b <- nrow(df1)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			NoCure = function(tm, df) {
@@ -146,15 +174,15 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- nrow(df)
 				b <- nrow(df1)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			DryNI = function(tm, df) {
 				
 				yearAgo <- seq(tm, by = "-13 months", length.out = 2)[2]
 				
-				if (yearAgo < yearmonth(min(df$Pruefdatum))) {
-					stop("Most probably insufficient data to calculate DryNI.")
+				if (sum(unique(yearmonth(df$Pruefdatum)) > yearAgo) < 11) {
+					return(retFun(NA, NA))
 				}
 				
 				calvings <- unique(df[df$LaktNr > 1 &
@@ -219,15 +247,15 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(ZZpost > 100)
 				b <- length(ZZpost)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			DryCure = function(tm, df) {
 				
 				yearAgo <- seq(tm, by = "-13 months", length.out = 2)[2]
 				
-				if (yearAgo < yearmonth(min(df$Pruefdatum))) {
-					stop("Most probably insufficient data to calculate DryCure.")
+				if (sum(unique(yearmonth(df$Pruefdatum)) > yearAgo) < 11) {
+					return(retFun(NA, NA))
 				}
 				
 				calvings <- unique(df[df$LaktNr > 1 &
@@ -293,15 +321,15 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(ZZpost <= 100)
 				b <- length(ZZpost)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			HeiferMast = function(tm, df) {
 				
 				yearAgo <- seq(tm, by = "-13 months", length.out = 2)[2]
 				
-				if (yearAgo < yearmonth(min(df$Pruefdatum))) {
-					stop("Most probably insufficient data to calculate HeiferMast.")
+				if (sum(unique(yearmonth(df$Pruefdatum)) > yearAgo) < 11) {
+					return(retFun(NA, NA))
 				}
 				
 				
@@ -334,7 +362,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(ZZfirst > 100)
 				b <- length(ZZfirst)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			LowFPR = function(tm, df) {
@@ -346,7 +374,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$Fp / df$Ep < 1.0)
 				b <- nrow(df)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			HiFPRtotal = function(tm, df) {
@@ -358,7 +386,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$Fp / df$Ep > 1.5)
 				b <- nrow(df)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			HiFPR100 = function(tm, df) {
@@ -371,7 +399,7 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 				a <- sum(df$Fp / df$Ep > 1.5)
 				b <- nrow(df)
 				
-				return(c(a = a, b = b, c = a * 100 / b))
+				retFun(a, b)
 				
 			},
 			Urea = function(tm, df) {
@@ -380,7 +408,13 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 										!is.na(Urea)) %>%
 						{subset(., Urea > 0)}
 				
-				return(c(mean = mean(df$Urea), sd = sd(df$Urea)))
+				ret <- c(
+						validateValue(mean(df$Urea)), 
+						validateValue(sd(df$Urea))
+				)
+				stopifnot(length(ret) == 2)
+				names(ret) <- c("mean", "sd")
+				return(ret)
 				
 			},
 			stop("Unkown indicator!"))
@@ -419,12 +453,20 @@ calculate_indicator <- function(indicator, data, testmonths = NA) {
 	
 	
 	out <- sapply(usemonths, do_determine, df = data) %>%
-			matrix(., nrow = length(testmonths), byrow = TRUE)
+	  {matrix(
+	    ., 
+	    nrow = length(testmonths), 
+	    byrow = TRUE, 
+	    dimnames = list(
+	      NULL,
+	      dimnames(.)[[1]]
+	    )
+	  )}
 	out <- as.data.frame(out, stringsAsFactors = FALSE)
 	out <- cbind(
 			Month = testmonths,
 			out
-			)
+	)
 	
 	return(out)		
 	

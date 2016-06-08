@@ -16,6 +16,22 @@ c("LowSCC", "LactNI", "LactCure", "Chronic", "NoCure", "DryNI", "DryCure", "Heif
 \item{testmonths}{The months for which the indicator should be calculated as vector
 of class \code{Date}. If \code{NA}, the recent date of \code{data} is used.}
 }
+\value{
+A \code{data.frame} with \code{nrow = length(testmonths)} and four columns:
+ \describe{
+  \item{\code{Month}}{the test month}
+  \item{\code{a}}{the numerator}
+  \item{\code{b}}{the denominator}
+  \item{\code{c}}{the percentage of the \code{indicator}}
+ }
+ for all indicators except \code{Urea}. For \code{indicator = Urea}, the data.frame 
+ has only three columns: 
+ \describe{
+  \item{\code{Month}}{the test month}
+  \item{\code{mean}}{the mean}
+  \item{\code{sd}}{the standard deviation of the milk urea content}
+ }
+}
 \description{
 Used inside \code{\link{IndicatorSheet}}.
 }
