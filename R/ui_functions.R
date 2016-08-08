@@ -6,17 +6,19 @@
 #' graphical report on a single page in pdf-format.  
 #' The indicators are calculated for the 13 recent months for which data is provided.  
 #'
-#' @param PCstart Character of length 1. Full path to the ADIS file to be used for monitoring.
+#' @param inputFile Character of length 1. Full path to the data file to be used for monitoring.
+#' @param inputType Character of length 1. One of \code{c("adis", "herde")}.
 #' @param Farm A character string, the 'name' used for the herd / farm in the report.
 #' @param out_dir Optional character of length 1. Full path to the directory where the report
-#'  file should be produced. If not specified the directory of \code{PCstart} is used.
+#'  file should be produced. If not specified the directory of \code{inputFile} is used.
 #' @param out_window Logical of length 1. Should the report be shown in the standard plot display?
 #'  (Default is \code{FALSE})
 #' @param return_results Logical of length 1. Should the data shown in the report be returned
 #'  as a data.frame? (Default is \code{FALSE}).
 #'
-#' @details See \code{\link{prepare_PCstart}} for the required input file. The 
-#'   definitions of the indicators are given in the package vignette
+#' @details See \code{\link{prepare_PCstart}} for the required ADIS input file
+#'   and \code{\link{prepare_HerdeMLP}} for the required input file from a HERDE backup  
+#'   The definitions of the indicators are given in the package vignette
 #'   \file{UdderHealthMonitor::User Guide}.
 #'
 #' @return A grafical report in pdf-format is always produced in the \code{out_dir}
@@ -46,7 +48,8 @@
 #' @export
 
 IndicatorSheet <- function(
-		PCstart = NULL,
+		inputFile = NULL,
+		inputType = "adis",
 		Farm = "SomeDairyHerd",
 		out_dir = NULL,
 		out_window = FALSE,
@@ -55,25 +58,29 @@ IndicatorSheet <- function(
 	
 	# test the parameters
 	
-	if (is.null(PCstart)) {
+	if (is.null(inputFile)) {
 		
-		PCstart <- try(file.choose())
+		inputFile <- try(file.choose())
 		
-		if ("try-error" %in% class(PCstart)) {
+		if ("try-error" %in% class(inputFile)) {
 			
-			cat("\nNo PCstart file selected.\n")
+			cat("\nNo inputFile file selected.\n")
 			
 			return(invisible(NULL))
 			
 		}
 		
 	}
-	assertive::assert_is_of_length(PCstart, 1)
+	assertive::assert_is_of_length(inputFile, 1)
+	
+	
+	assertive::assert_is_of_length(inputType, 1)
+	assertive::assert_is_subset(inputType, c("adis", "herde"))
 	
 	
 	if (is.null(out_dir)) {
 		
-		out_dir <- dirname(PCstart)
+		out_dir <- dirname(inputFile)
 		
 	}
 	assertive::assert_is_of_length(out_dir, 1)
@@ -96,7 +103,12 @@ IndicatorSheet <- function(
 	
 	# import data
 	
-	CowData <- prepare_PCstart(PCstart)$einzeltiere
+	CowData <- switch(
+			inputType,
+			adis = prepare_PCstart(inputFile)$einzeltiere,
+			herde = prepare_HerdeMLP(inputFile),
+			stop("Unkown inputType!")
+	)
 	
 	
 	

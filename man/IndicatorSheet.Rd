@@ -4,16 +4,19 @@
 \alias{IndicatorSheet}
 \title{Create a simple graphical report of the most important SCC indicators}
 \usage{
-IndicatorSheet(PCstart = NULL, Farm = "SomeDairyHerd", out_dir = NULL,
-  out_window = FALSE, return_results = FALSE)
+IndicatorSheet(inputFile = NULL, inputType = "adis",
+  Farm = "SomeDairyHerd", out_dir = NULL, out_window = FALSE,
+  return_results = FALSE)
 }
 \arguments{
-\item{PCstart}{Character of length 1. Full path to the ADIS file to be used for monitoring.}
+\item{inputFile}{Character of length 1. Full path to the data file to be used for monitoring.}
+
+\item{inputType}{Character of length 1. One of \code{c("adis", "herde")}.}
 
 \item{Farm}{A character string, the 'name' used for the herd / farm in the report.}
 
 \item{out_dir}{Optional character of length 1. Full path to the directory where the report
-file should be produced. If not specified the directory of \code{PCstart} is used.}
+file should be produced. If not specified the directory of \code{inputFile} is used.}
 
 \item{out_window}{Logical of length 1. Should the report be shown in the standard plot display?
 (Default is \code{FALSE})}
@@ -46,8 +49,9 @@ graphical report on a single page in pdf-format.
 The indicators are calculated for the 13 recent months for which data is provided.
 }
 \details{
-See \code{\link{prepare_PCstart}} for the required input file. The 
-  definitions of the indicators are given in the package vignette
+See \code{\link{prepare_PCstart}} for the required ADIS input file
+  and \code{\link{prepare_HerdeMLP}} for the required input file from a HERDE backup  
+  The definitions of the indicators are given in the package vignette
   \file{UdderHealthMonitor::User Guide}.
 }
 \note{

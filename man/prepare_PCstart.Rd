@@ -20,7 +20,7 @@ Returns a list with 3 data frames:
 }
 }
 \description{
-Used inside \code{\link{monitor_SCCUdderHealth}}.
+Used inside \code{\link{monitor_SCCUdderHealth}} and \code{\link{IndicatorSheet}}.
 The following entities in one virtual file are needed:
 \describe{
    \item{\code{880028}}{Items: \code{00800181, 00800004, 00800043, 00800182, 00800183,
